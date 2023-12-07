@@ -3,30 +3,36 @@ use std::cmp::Ordering;
 use std::io;
 
 fn main() {
-    println!("Guess the number!");
+    println!("***GUESS THE NUMBER***\n");
 
     // Generate secret num
     let secret_num = rand::thread_rng().gen_range(1..=100);
 
     // println!("The secret no. is: {secret_num}");
 
-    println!("Please input your guess.");
+    loop {
+        println!("Please input your guess.");
 
-    // Collect user guess
-    let mut guess = String::new();
+        // Collect user guess
+        let mut guess = String::new();
 
-    io::stdin()
-        .read_line(&mut guess)
-        .expect("Failed to read line");
+        io::stdin()
+            .read_line(&mut guess)
+            .expect("Failed to read line");
 
-    let guess: u32 = guess.trim().parse().expect("Please type a number");
+        // Shadowing in Rust
+        let guess: u32 = guess.trim().parse().expect("Please type a number");
 
-    // Compare guess with secret
-    match guess.cmp(&secret_num) {
-        Ordering::Less => println!("Too small"),
-        Ordering::Greater => println!("Too big"),
-        Ordering::Equal => println!("Equal"),
+        // Compare guess with secret
+        match guess.cmp(&secret_num) {
+            Ordering::Less => println!("Too small\n"),
+            Ordering::Greater => println!("Too big\n"),
+            Ordering::Equal => {
+                println!("You Win!");
+                break;
+            }
+        }
+
+        // println!("You guessed: {guess}");
     }
-
-    println!("You guessed: {guess}");
 }
