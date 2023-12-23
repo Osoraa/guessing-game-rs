@@ -21,7 +21,12 @@ fn main() {
             .expect("Failed to read line");
 
         // Shadowing in Rust
-        let guess: u32 = guess.trim().parse().expect("Please type a number");
+        // let guess: u32 = guess.trim().parse().expect("Please type a number");
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue
+        };
+
 
         // Compare guess with secret
         match guess.cmp(&secret_num) {
@@ -32,7 +37,6 @@ fn main() {
                 break;
             }
         }
-
         // println!("You guessed: {guess}");
     }
 }
